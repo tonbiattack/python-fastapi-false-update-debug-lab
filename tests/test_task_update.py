@@ -23,3 +23,17 @@ def test_patch_completed_false_updates_response_and_persisted_state() -> None:
 
     saved_task = get_task("task-1")
     assert saved_task.completed is False
+
+
+def test_patch_omitted_completed_keeps_existing_value() -> None:
+    """completedを省略した部分更新は既存の真偽値を維持する。"""
+
+    create_task(task_id="task-2", title="完了済みタスク", completed=True)
+
+    response = client.patch("/tasks/task-2", json={})
+
+    assert response.status_code == 200
+    assert response.json()["completed"] is True
+
+    saved_task = get_task("task-2")
+    assert saved_task.completed is True

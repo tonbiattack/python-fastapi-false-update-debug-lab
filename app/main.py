@@ -59,12 +59,12 @@ def get_task(task_id: str) -> Task:
 
 @app.patch("/tasks/{task_id}", response_model=TaskResponse)
 def update_task(task_id: str, patch: TaskPatch) -> Task:
-    """タスクを部分更新する。修正前はFalseを更新できない。"""
+    """タスクを部分更新する。"""
 
     task = get_task(task_id)
 
-    # BUG: False は偽値のため、この条件を通らず既存状態が残る。
-    if patch.completed:
+    # Noneはキー省略またはnullを表すため既存値を維持し、Falseは明示値として保存する。
+    if patch.completed is not None:
         task.completed = patch.completed
 
     return task

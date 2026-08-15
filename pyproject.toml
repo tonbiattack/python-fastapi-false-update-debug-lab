@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-fastapi-false-update-debug-lab"
+version = "0.1.0"
+description = "FastAPIの部分更新でfalseが保存されない不具合を再現・修正する学習用プロジェクト"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.115.12",
+    "httpx==0.28.1",
+    "pydantic==2.11.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.5",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
